@@ -1,0 +1,2 @@
+Put words you don't want the bot to say within the say command here.
+Seperate with each line

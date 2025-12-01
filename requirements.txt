@@ -1,0 +1,8 @@
+discord.py
+discord
+guilded.py
+guilded
+stoat.py
+python-dotenv
+requests
+googletrans==3.1.0a0
