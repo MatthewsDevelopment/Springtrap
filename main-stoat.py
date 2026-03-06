@@ -30,7 +30,7 @@ def get_server_stats():
 
 @client.on(stoat.ReadyEvent)
 async def on_ready(_) -> None:
-    print("Springtrap [Revolt] Bot is Ready")
+    print("Springtrap [Stoat] Bot is Ready")
 
 @client.on(commands.CommandErrorEvent)
 async def on_command_error(event):

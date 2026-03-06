@@ -3,7 +3,10 @@
 > [!CAUTION]
 > The Guilded bot is deprecated and will no longer work after Guilded shuts down on December 19th, 2025. Code will remain up for legacy reasons.
 
-Springtrap is an embed builder (that can be sent through the bot or webhook), webhook deleter, and translator bot for Discord, Guilded, and Stoat.chat. This bot includes a filter to prevent the bots from saying bad and illegal stuff.
+> [!NOTE]
+> The Fluxer bot is currently very unfinished and still needs a lot of work.
+
+Springtrap is an embed builder (that can be sent through the bot or webhook), webhook deleter, and translator bot for Discord, Stoat.chat, and Fluxer.app. These bot includes a filter to prevent the bots from saying bad and illegal stuff.
 
 With the Discord bot, it supports both mention prefix and slash commands.
 
@@ -11,9 +14,9 @@ For Stoat.chat users: Our Stoat bot is not available on any 3rd party instances.
 
 ## Original Bots:
 
-[Discord Bot](https://discord.com/oauth2/authorize?client_id=844448961195409418&permissions=0&integration_type=0&scope=bot+applications.commands) - [Revolt Bot](https://app.revolt.chat/bot/01H96QS2SJP1NCVDMQZFMZKMYP)
+[Discord Bot](https://discord.com/oauth2/authorize?client_id=844448961195409418&permissions=0&integration_type=0&scope=bot+applications.commands) - [Stoat Bot](https://old.stoat.chat/bot/01H96QS2SJP1NCVDMQZFMZKMYP) - [Fluxer Bot](https://web.fluxer.app/oauth2/authorize?client_id=1473471436363227191&scope=bot)
 
-[Discord Server](https://discord.gg/VBJyndbKC2) - [Stoat Server](https://rvlt.gg/fSfKknAw)
+[Discord Server](https://discord.gg/VBJyndbKC2) - [Stoat Server](https://stt.gg/fSfKknAw) - [Fluxer Server](https://fluxer.gg/S1kKFHAF)
 
 ## Setup Guide:
 
@@ -21,7 +24,8 @@ For Stoat.chat users: Our Stoat bot is not available on any 3rd party instances.
 2. Create a Discord, Guilded, and/or Stoat bot
 - For Discord: Create a Discord bot in https://discord.com/developers/applications
 - For Guilded: Head to your server and go to your bot settings
-- For Stoat: Head to https://app.revolt.chat/settings/bots and create a bot by clicking "Create a bot" (if using a 3rd party instance, app.revolt.chat would be the domain of your instance)
+- For Stoat: Head to https://app.revolt.chat/settings/bots and create a bot by clicking "Create a bot" (if using a 3rd party instance, app.stoat.chat would be the domain of your instance)
+- For Fluxer: Head to your user settings and scroll down till you see an "Applications" section. Create an Application and regenerate your bot token.
 3. Fill in everything in the .env.example file and rename .env.example to .env
 - DISCORDBOTTOKEN= -> Your Discord bot token
 - GUILDEDBOTTOKEN= -> Your Guilded bot token
@@ -30,6 +34,8 @@ For Stoat.chat users: Our Stoat bot is not available on any 3rd party instances.
 - STOATBOTPREFIX= -> Prefix for the Stoat bot
 - STOATBASEURL= -> The base API url if the Stoat instance (Defaults to normal Stoat instance if left blank)
 - STOATWEBSOCKETBASE= -> The websocket base. Can be found in the ws part in the base api url (Defaults to normal Stoat instance if left blank)
+- FLUXERBOTTOKEN= -> Your Fluxer bot token
+- FLUXERBOTPREFIX= -> Prefix for the Fluxer bot.
 - LAUNCHMODE=0 -> Refer to the modes section below
 - PTERODACTYL_PANELURL= -> (Optional) Pterodactyle panel url (include the https:// or http://
 - PTERODACTYL_APIKEY= -> (Optional) Your Pterodactyle API key
@@ -37,16 +43,19 @@ For Stoat.chat users: Our Stoat bot is not available on any 3rd party instances.
 4. Install everything from requirements.txt (Command is: pip install -r requirements.txt)
 5. Run the Bot (Command is: python main.py)
 
-NEVER SHARE YOUR TOKENS WITH ANYONE!
+> [!CAUTION]
+> NEVER SHARE YOUR TOKENS WITH ANYONE!
 
 MODES:
 
 - 0 = Discord+Stoat Bot
 - 1 = Discord Bot Only
 - 2 = Stoat Bot Only
-- 3 = Discord, Guilded, and Stoat Bot
-- 4 = Guilded Bot Only
-- 5 = Discord and Guildeds Bot
+- 3 = Fluxer Bot Only
+- 4 = Guilded Bot Only (DEPRECATED)
+- 5 = Discord and Guilded Bot (DEPRECATED)
+- 6 = Discord, Stoat, and Fluxer Bot
+- 7 = Stoat and Fluxer Bot
 
 ## WARNING:
 
