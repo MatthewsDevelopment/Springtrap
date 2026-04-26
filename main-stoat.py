@@ -30,7 +30,7 @@ def get_server_stats():
 
 @client.on(stoat.ReadyEvent)
 async def on_ready(_) -> None:
-    print("Springtrap [Stoat] Bot is Ready")
+    print(f"{client.user.name} [Stoat] Bot is Ready")
 
 @client.on(commands.CommandErrorEvent)
 async def on_command_error(event):
@@ -42,7 +42,7 @@ async def on_command_error(event):
 
 @client.command()
 async def help(ctx):
-    embed = pyvolt.SendableEmbed(title="Springtrap", description=f"{BOTPREFIX}help - This message\n{BOTPREFIX}ping - Pong\n{BOTPREFIX}args - Arguments for commands\n{BOTPREFIX}say - Make me say things\n{BOTPREFIX}esay - Make me say things in a embed\n{BOTPREFIX}msay - Send a message using Masquerade\n{BOTPREFIX}translate - Translate text to a different language\n{BOTPREFIX}encoder = Encode/Decode text\n{BOTPREFIX}systeminfo - Get resource usage of the python server")
+    embed = stoat.SendableEmbed(title=f"{client.user.name}", description=f"{BOTPREFIX}help - This message\n{BOTPREFIX}ping - Pong\n{BOTPREFIX}args - Arguments for commands\n{BOTPREFIX}say - Make me say things\n{BOTPREFIX}esay - Make me say things in a embed\n{BOTPREFIX}msay - Send a message using Masquerade\n{BOTPREFIX}translate - Translate text to a different language\n{BOTPREFIX}encoder = Encode/Decode text\n{BOTPREFIX}systeminfo - Get resource usage of the python server")
     await ctx.channel.send(embeds=[embed])
 
 @client.command()
@@ -71,6 +71,9 @@ async def args(ctx):
 
 @client.command()
 async def say(ctx, *, message:str):
+    if "@everyone" in message.lower():
+        await ctx.channel.send("You can not have the bot mention everyone")
+        return
     if any(word in message for word in blockedwords):
         await ctx.channel.send("I WILL NOT SAY ANYTHING THAT CONTAINS WORDS RELATED TO OR ENCOURAGES SCAMS, ILLEGAL ACTIVITIES, AND/OR SELF-HARM")
         return
@@ -78,6 +81,10 @@ async def say(ctx, *, message:str):
 
 @client.command()
 async def esay(ctx, colorhex:str, title:str, message:str):
+    if not ctx.server.permissions_for(ctx.author).manage_server:
+        embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
+        await ctx.channel.send(embeds=[embed])
+        return
     if any(word in title for word in blockedwords):
         await ctx.channel.send("I WILL NOT SAY ANYTHING THAT CONTAINS WORDS RELATED TO OR ENCOURAGES SCAMS, ILLEGAL ACTIVITIES, AND/OR SELF-HARM")
         return
@@ -89,6 +96,10 @@ async def esay(ctx, colorhex:str, title:str, message:str):
 
 @client.command()
 async def msay(ctx, avatarurl:str, mname:str, message:str):
+    if not ctx.server.permissions_for(ctx.author).manage_server:
+        embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
+        await ctx.channel.send(embeds=[embed])
+        return
     if any(word in message for word in blockedwords):
         await ctx.channel.send("I WILL NOT SAY ANYTHING THAT CONTAINS WORDS RELATED TO OR ENCOURAGES SCAMS, ILLEGAL ACTIVITIES, AND/OR SELF-HARM")
         return
@@ -97,15 +108,16 @@ async def msay(ctx, avatarurl:str, mname:str, message:str):
 @client.command()
 @commands.server_only()
 async def wsay(ctx, wname:str, message:str):
-    if BASEURL == "https://beta.revolt.chat/api":
-        if any(word in message for word in blockedwords):
-            await ctx.channel.send("I WILL NOT SAY ANYTHING THAT CONTAINS WORDS RELATED TO OR ENCOURAGES SCAMS, ILLEGAL ACTIVITIES, AND/OR SELF-HARM")
-            return
-        webhook = await client.http.create_webhook(f"{ctx.channel.id}", name=f"{wname}")
-        await webhook.execute(f"{message}")
-        await webhook.delete()
-    else:
-        await ctx.send("This command is disabled because this command uses a Revolt beta feature that only works through the beta API url. If you are the bot owner, open the .env file and put in https://beta.revolt.chat/api within REVOLTBASEURL")
+    if not ctx.server.permissions_for(ctx.author).manage_server:
+        embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
+        await ctx.channel.send(embeds=[embed])
+        return
+    if any(word in message for word in blockedwords):
+        await ctx.channel.send("I WILL NOT SAY ANYTHING THAT CONTAINS WORDS RELATED TO OR ENCOURAGES SCAMS, ILLEGAL ACTIVITIES, AND/OR SELF-HARM")
+        return
+    webhook = await client.http.create_webhook(f"{ctx.channel.id}", name=f"{wname}")
+    await webhook.execute(f"{message}")
+    await webhook.delete()
 
 @client.command()
 async def translate(ctx, lang, *, textmessage):
@@ -130,7 +142,7 @@ async def encoder(ctx, option="", *, textmessage:str):
 @commands.server_only()
 async def deletedwebhook(ctx, webhookurl):
     if not ctx.server.permissions_for(ctx.author).manage_server:
-        embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE SERVER** permission to use this command.")
+        embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
         await ctx.channel.send(embeds=[embed])
         return
     if 'https://discord.com/api/webhooks/' in webhookurl:
@@ -145,13 +157,13 @@ async def deletedwebhook(ctx, webhookurl):
 
 @client.command()
 @commands.server_only()
-async def deleterwebhook(ctx):
-    await ctx.channel.send("This command is disabled because this command uses a Revolt beta feature that only works through the beta API url but not stable enough for this feature to work.")
+async def deleteswebhook(ctx):
+    await ctx.channel.send("This command is disabled")
 
 @client.command()
 @commands.server_only()
 async def webhooklist(ctx):
-    await ctx.channel.send("This command is disabled because this command uses a Revolt beta feature that only works through the beta API url but not stable enough for this feature to work.")
+    await ctx.channel.send("This command is disabled")
 
 if "__main__" == __name__:
     with open("blockedwords.txt", "r") as f:

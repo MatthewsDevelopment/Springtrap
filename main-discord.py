@@ -135,7 +135,7 @@ async def esay(ctx, decimalcolor:int, title:str, message:str, fmessage:str = Non
 @esay.error
 async def esay_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.MissingRequiredArgument):  
         embed = discord.Embed(title="ARGUMENTS REQUIRED", description="esay <decimalcolor> <title> <message> [footer message] (Put each argument in quotes)", color=(16711680))
@@ -171,7 +171,7 @@ async def wesay(ctx, webhookurl:str,  decimalcolor:int, title:str, message:str, 
 @wesay.error
 async def wesay_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.CommandOnCooldown):
         await ctx.send("Whoa there. This command has a 15 second cooldown. Try again later.")
@@ -200,7 +200,7 @@ async def wsay(ctx, webhookurl:str, message:str):
 @wsay.error
 async def wsay_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.CommandOnCooldown):
         await ctx.send("Whoa there. This command has a 15 second cooldown. Try again later.")
@@ -237,7 +237,7 @@ async def editembed(ctx, msgid:int, decimalcolor:int, title:str, message:str, fm
 @editembed.error
 async def editembed_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.MissingRequiredArgument):  
         embed = discord.Embed(title="ARGUMENTS REQUIRED", description="editembed <messageid> <decimalcolor> <title> <message> [footer message] (Put each argument in quotes)", color=(16711680))
@@ -262,7 +262,7 @@ async def deletewebhook(ctx, webhookurl):
 @deletewebhook.error
 async def deletewebhook_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.MissingRequiredArgument):  
         embed = discord.Embed(title="ARGUMENTS REQUIRED", description="deletewebhook <webhookurl>", color=(16711680))
@@ -281,10 +281,10 @@ async def webhooklist(ctx):
 @webhooklist.error
 async def webhooklist_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     if isinstance(error, commands.BotMissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="I need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="I need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await ctx.send(embed=embed)
     else:
         raise error
@@ -305,7 +305,7 @@ async def translate_error(ctx, error):
     if isinstance(error, commands.CommandOnCooldown):
         await ctx.send("Whoa there. This command has a 15 second cooldown. Try again later.")
     if isinstance(error, commands.MissingRequiredArgument):  
-        embed = discord.Embed(title="ARGUMENTS REQUIRED", description="translate <lang:totranslateto> <message>", color=(16711680))
+        embed = discord.Embed(title="ARGUMENTS REQUIRED", description=f"{BOTPREFIX}translate <lang:totranslateto> <message>", color=(16711680))
         await ctx.send(embed=embed)
     else:
         raise error
@@ -411,7 +411,7 @@ async def _wesay(interaction: discord.Interaction, webhookurl:str, decimalcolor:
 @_wesay.error
 async def _wesay_error(interaction, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
         raise error
@@ -433,7 +433,7 @@ async def _wsay(interaction: discord.Interaction, webhookurl:str, message:str):
 @_wsay.error
 async def _wsay_error(ctx, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
         raise error
@@ -465,7 +465,7 @@ async def _editembed(interaction: discord.Interaction, msgid:str, decimalcolor:i
 @_editembed.error
 async def _editembed_error(interaction, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_MESSAGES** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
         raise error
@@ -487,7 +487,7 @@ async def _deletewebhook(interaction: discord.Interaction, webhookurl:str):
 @_deletewebhook.error
 async def _deletewebhook_error(interaction, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed)
     else:
         raise error
@@ -503,10 +503,10 @@ async def _webhooklist(interaction: discord.Interaction):
 @_webhooklist.error
 async def _webhooklist_error(interaction, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed, ephemeral=True)
     if isinstance(error, app_commands.BotMissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="I need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="I need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
         raise error
@@ -553,7 +553,7 @@ async def _embedtools(interaction: discord.Interaction):
 @_embedtools.error
 async def _embedtools_error(interaction, error):
     if isinstance(error, app_commands.MissingPermissions):
-        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
+        embed = discord.Embed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE_WEBHOOKS** permission to use this command.", color=(16711680))
         await interaction.response.send_message(embed=embed)
     else:
         raise error
