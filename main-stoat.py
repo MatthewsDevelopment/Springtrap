@@ -80,7 +80,7 @@ async def say(ctx, *, message:str):
     await ctx.channel.send(message)
 
 @client.command()
-async def esay(ctx, colorhex:str, title:str, message:str):
+async def esay(ctx, colorhex:str, title:str, *, message:str):
     if not ctx.server.permissions_for(ctx.author).manage_server:
         embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
         await ctx.channel.send(embeds=[embed])
@@ -95,7 +95,7 @@ async def esay(ctx, colorhex:str, title:str, message:str):
     await ctx.channel.send(embeds=[embed])
 
 @client.command()
-async def msay(ctx, avatarurl:str, mname:str, message:str):
+async def msay(ctx, avatarurl:str, mname:str, *, message:str):
     if not ctx.server.permissions_for(ctx.author).manage_server:
         embed = stoat.SendableEmbed(title="AN ERROR HAS OCCURED", description="You need to have the **MANAGE SERVER** permission to use this command.")
         await ctx.channel.send(embeds=[embed])
@@ -173,26 +173,32 @@ if "__main__" == __name__:
 @commands.is_owner()
 async def status(ctx, *, statustext):
     await client.http.edit_my_user(status=stoat.UserStatusEdit(text=f"{statustext}"))
-    await ctx.channel.send("Status has been changed")
+    await ctx.channel.send("My status has successfully changed")
+
+@client.command()
+@commands.is_owner()
+async def statusreset(ctx):
+    await client.http.edit_my_user(status=stoat.UserStatusEdit(text=None))
+    await ctx.channel.send("My status has successfully reset")
 
 @client.command()
 @commands.is_owner()
 async def presence(ctx, presencetype=""):
     if presencetype == "online":
         await client.http.edit_my_user(status=stoat.UserStatusEdit(presence=stoat.Presence.online))
-        await ctx.channel.send("Status has been changed")
+        await ctx.channel.send("My status has successfully changed")
     if presencetype == "idle":
         await client.http.edit_my_user(status=stoat.UserStatusEdit(presence=stoat.Presence.idle))
-        await ctx.channel.send("Status has been changed")
+        await ctx.channel.send("My status has successfully changed")
     if presencetype == "focus":
         await client.http.edit_my_user(status=stoat.UserStatusEdit(presence=stoat.Presence.focus))
-        await ctx.channel.send("Status has been changed")
+        await ctx.channel.send("My status has successfully changed")
     if presencetype == "dnd":
         await client.http.edit_my_user(status=stoat.UserStatusEdit(presence=stoat.Presence.busy))
-        await ctx.channel.send("Status has been changed")
+        await ctx.channel.send("My status has successfully changed")
     if presencetype == "invisible":
         await client.http.edit_my_user(status=stoat.UserStatusEdit(presence=stoat.Presence.invisible))
-        await ctx.channel.send("Status has been changed")
+        await ctx.channel.send("My status has successfully changed")
 
 
 

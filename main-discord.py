@@ -12,6 +12,7 @@ import base64
 import random
 import asyncio
 import aiohttp
+import secrets
 
 load_dotenv('.env')
 intents = discord.Intents.default()
@@ -360,7 +361,7 @@ async def systeminfo(interaction: discord.Interaction):
 
 @client.tree.command(name="esay", description="Make and send a simple embed")
 @app_commands.checks.has_permissions(manage_messages=True)
-async def _esay(interaction: discord.Interaction, channel:discord.TextChannel, decimalcolor:int, title:str, message:str, fmessage:str = None):
+async def _esay(interaction: discord.Interaction, channel:discord.TextChannel, decimalcolor:int, title:str, message:str, fmessage:str = None, bmessage:str = None, blink:str = None):
     if any(word in title for word in blockedwords):
         await interaction.response.send_message("I will not say anything that encourages or promotes scams, illegal activites, and/or self-harm", ephemeral=True)
         return
@@ -373,7 +374,13 @@ async def _esay(interaction: discord.Interaction, channel:discord.TextChannel, d
         if any(word in fmessage for word in blockedwords):
             await interaction.response.send_message("I will not say anything that encourages or promotes scams, illegal activites, and/or self-harm", ephemeral=True)
             return
-    await channel.send(embed=embed)
+    if bmessage and blink:
+        button = Button(label=f"{bmessage}", url=f"{blink}")
+        view = View()
+        view.add_item(button)
+        await channel.send(embed=embed, view=view)
+    else:
+        await channel.send(embed=embed)
     await interaction.response.send_message("Embed sent successfully to the channel provided", ephemeral=True)
     return
 
@@ -440,7 +447,7 @@ async def _wsay_error(ctx, error):
 
 @client.tree.command(name="editembed", description="Edit an embed sent by the bot")
 @app_commands.checks.has_permissions(manage_messages=True)
-async def _editembed(interaction: discord.Interaction, msgid:str, decimalcolor:int, title:str, message:str, fmessage:str = None):
+async def _editembed(interaction: discord.Interaction, msgid:str, decimalcolor:int, title:str, message:str, fmessage:str = None, bmessage:str = None, blink:str = None):
     msg = await interaction.channel.fetch_message(msgid)
     if msg.guild.id == interaction.guild.id:
         if any(word in title for word in blockedwords):
@@ -455,7 +462,13 @@ async def _editembed(interaction: discord.Interaction, msgid:str, decimalcolor:i
             if any(word in message for word in blockedwords):
                 await interaction.response.send_message("I will not say anything that encourages or promotes scams, illegal activites, and/or self-harm", ephemeral=True)
                 return
-        await msg.edit(embed=embed)
+        if bmessage and blink:
+            button = Button(label=f"{bmessage}", url=f"{blink}")
+            view = View()
+            view.add_item(button)
+            await msg.edit(embed=embed, view=view)
+        else:
+            await msg.edit(embed=embed)
         await interaction.response.send_message("Successfully edited the embed", ephemeral=True)
         return
     else:
@@ -565,27 +578,37 @@ if "__main__" == __name__:
 matthewdevstaff = [815684414045552680, 724723809218723970]
 
 @client.command()
+async def sessionkey(ctx):
+    if ctx.author.id in matthewdevstaff:
+        secret_key = secrets.token_urlsafe(24)
+        print(secret_key)
+        await ctx.send(f"New session key generated for webserver: {secret_key}")
+    else:
+        await ctx.send("Only Matthews Development Staff members can use this command")
+        return
+
+@client.command()
 async def status(ctx, value="", *, statustext):
     if ctx.author.id in matthewdevstaff:
         if value == "watch":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{statustext}"))
-            await ctx.send("My Status is Successfully Changed")
+            await ctx.send("My status has successfully changed")
             return
         if value == "listen":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{statustext}"))
-            await ctx.send("My Status is Successfully Changed")
+            await ctx.send("My status has successfully changed")
             return
         if value == "play":
             await client.change_presence(activity=discord.Game(name=f"{statustext}"))
-            await ctx.send("My Status is Successfully Changed")
+            await ctx.send("My status has successfully changed")
             return
         if value == "compete":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.competing, name=f"{statustext}"))
-            await ctx.send("My Status is Successfully Changed")
+            await ctx.send("My status has successfully changed")
             return
         if value == "custom":
             await client.change_presence(activity=discord.CustomActivity(name=f"{statustext}"))
-            await ctx.send("My Status is Successfully Changed")
+            await ctx.send("My status has successfully changed")
             return
     else:
         await ctx.send("Only Matthews Development Staff members can use this command")
@@ -603,23 +626,23 @@ async def _status(interaction: discord.Interaction, status: discord.app_commands
     if interaction.user.id in matthewdevstaff:
         if status.name == "Watching":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{statustext}"))
-            await interaction.response.send_message("My Status is Successfully Changed", ephemeral=True)
+            await interaction.response.send_message("My status has successfully changed", ephemeral=True)
             return
         if status.name == "Listening":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{statustext}"))
-            await interaction.response.send_message("My Status is Successfully Changed", ephemeral=True)
+            await interaction.response.send_message("My status has successfully changed", ephemeral=True)
             return
         if status.name == "Playing":
             await client.change_presence(activity=discord.Game(name=f"{statustext}"))
-            await interaction.response.send_message("My Status is Successfully Changed", ephemeral=True)
+            await interaction.response.send_message("My status has successfully changed", ephemeral=True)
             return
         if status.name == "Compete":
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.competing, name=f"{statustext}"))
-            await interaction.response.send_message("My Status is Successfully Changed", ephemeral=True)
+            await interaction.response.send_message("My status has successfully changed", ephemeral=True)
             return
         if status.name == "Custom":
             await client.change_presence(activity=discord.CustomActivity(name=f"{statustext}"))
-            await interaction.response.send_message("My Status is Successfully Changed", ephemeral=True)
+            await interaction.response.send_message("My status has successfully changed", ephemeral=True)
             return
     else:
         await interaction.response.send_message("Only Matthews Development Staff members can use this command", ephemeral=True)
